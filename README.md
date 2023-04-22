@@ -1,2 +1,3 @@
 # marvelHeroes
-Marvel Heroes search application using open APIhttps://developer.marvel.com/
+Marvel Heroes search application using open API 
+@https://developer.marvel.com/
