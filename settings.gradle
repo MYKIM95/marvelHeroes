@@ -14,3 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "marvelHeroes"
 include ':app'
+include ':common-base'
+include ':common-util'
+include ':core-data'
+include ':core-model'
+include ':core-network'
