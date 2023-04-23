@@ -62,7 +62,6 @@ class SearchViewModel @Inject constructor(
     fun searchHero() {
 
 
-
         Log.d("123123123", "cancel 전 : ${searchJob?.isActive}")
         searchJob?.takeIf { it.isActive }?.cancel()
         Log.d("123123123", "cancel 후 : ${searchJob?.isActive}")

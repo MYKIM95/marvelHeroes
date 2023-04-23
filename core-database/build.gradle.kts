@@ -1,10 +1,12 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("mykim.android.library")
     id("mykim.android.hilt")
 }
 
 android {
-    namespace = "com.mykim.core_data"
+    namespace = "com.mykim.core_database"
 }
 
 dependencies {
@@ -16,8 +18,11 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    implementation(project(":core-model"))
-    implementation(project(":core-network"))
-    implementation(project(":core-database"))
+    implementation(libs.bundles.coroutine)
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
+
     implementation(project(":common-util"))
+    implementation(project(":core-model"))
+
 }
