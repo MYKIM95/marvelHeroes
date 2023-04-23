@@ -4,6 +4,7 @@
     <!-- Search Fragment -->
     <string name="search_hint">마블 영웅 이름을 입력하시오.</string>
     <string name="search_empty">검색 결과가 없습니다.</string>
+    <string name="search_end">더 불러올 결과가 없습니다.</string>
 
     <!-- Favorite Fragment -->
     <string name="favorite_empty">즐겨찾기 한 영웅이 없습니다.</string>

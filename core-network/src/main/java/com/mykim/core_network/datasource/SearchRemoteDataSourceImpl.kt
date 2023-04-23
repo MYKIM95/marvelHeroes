@@ -13,7 +13,8 @@ class SearchRemoteDataSourceImpl @Inject constructor(
         nameStartsWith: String,
         ts: String,
         apikey: String,
-        hash: String
-    ): Flow<HeroResponseData> = searchService.getHeroInfoList(nameStartsWith, ts, apikey, hash)
+        hash: String,
+        offset: Int
+    ): Flow<HeroResponseData> = searchService.getHeroInfoList(nameStartsWith, ts, apikey, hash, offset)
 
 }

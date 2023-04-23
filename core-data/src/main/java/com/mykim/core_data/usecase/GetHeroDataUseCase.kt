@@ -6,6 +6,6 @@ import javax.inject.Inject
 class GetHeroDataUseCase @Inject constructor(
     private val searchRepository: SearchRepository
 ) {
-    operator fun invoke(nameStartsWith: String, ts: String, apikey: String, hash: String) =
-        searchRepository.getHeroInfoList(nameStartsWith, ts, apikey, hash)
+    operator fun invoke(nameStartsWith: String, ts: String, apikey: String, hash: String, offset: Int) =
+        searchRepository.getHeroInfoList(nameStartsWith, ts, apikey, hash, offset)
 }

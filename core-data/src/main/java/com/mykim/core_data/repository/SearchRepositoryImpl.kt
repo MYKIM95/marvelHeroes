@@ -10,6 +10,7 @@ class SearchRepositoryImpl @Inject constructor(
         nameStartsWith: String,
         ts: String,
         apikey: String,
-        hash: String
-    ) =searchRemoteDataSource.getHeroInfoList(nameStartsWith, ts, apikey, hash)
+        hash: String,
+        offset: Int
+    ) =searchRemoteDataSource.getHeroInfoList(nameStartsWith, ts, apikey, hash, offset)
 }

@@ -3,16 +3,19 @@ package com.mykim.core_model.state
 import kotlinx.coroutines.flow.MutableStateFlow
 
 fun <T> mutableResultState(
-    state: ResultState<T> = ResultState.Loading
-): MutableStateFlow<ResultState<T>> = MutableStateFlow(state)
+    state: ResultUiState<T> = ResultUiState.Loading
+): MutableStateFlow<ResultUiState<T>> = MutableStateFlow(state)
 
-sealed class ResultState<out T> {
+sealed class ResultUiState<out T> {
 
-    object UnInitialize : ResultState<Nothing>()
+    object UnInitialize : ResultUiState<Nothing>()
 
-    object Loading : ResultState<Nothing>()
+    object Loading : ResultUiState<Nothing>()
 
-    data class Success<T>(val data: T) : ResultState<T>()
+    data class Success<T>(val data: T) : ResultUiState<T>()
 
-    data class Error(val error: Throwable) : ResultState<Nothing>()
+    data class Error(val error: Throwable) : ResultUiState<Nothing>()
+
+    object Finish : ResultUiState<Nothing>()
+
 }

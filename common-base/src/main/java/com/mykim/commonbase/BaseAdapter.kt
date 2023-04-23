@@ -36,6 +36,9 @@ abstract class BaseDiffUtilAdapter<Binding: ViewDataBinding, T>(
     }
 
     private val asyncAdapterList = AsyncListDiffer(this, itemCallback)
+    
+    protected val adapterList: List<T>
+        get() = asyncAdapterList.currentList
 
     open fun submit(list: List<T>, complete: () -> Unit = {}) {
         asyncAdapterList.submitList(list, complete)
