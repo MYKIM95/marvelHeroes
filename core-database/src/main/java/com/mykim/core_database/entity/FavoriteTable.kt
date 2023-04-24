@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class FavoriteTable(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "heroId") val heroId: Int,
+    @ColumnInfo(name = "thumbnail") val thumbnail: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "desc") val desc: String
 )

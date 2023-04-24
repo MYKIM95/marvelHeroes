@@ -40,6 +40,7 @@ dependencies {
 
     implementation(project(":core-data"))
     implementation(project(":core-model"))
+    implementation(project(":core-database"))
     implementation(project(":common-base"))
     implementation(project(":common-util"))
 }

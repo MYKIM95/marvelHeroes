@@ -14,4 +14,6 @@ class FavoriteDatabaseRepositoryImpl @Inject constructor(
 
     override fun deleteFavorite(heroId: Int): Int = favoriteDao.deleteFavoriteHero(heroId)
 
+    override fun selectFirstFavoriteItemId(): Int = favoriteDao.selectFirstFavoriteItemId()
+
 }

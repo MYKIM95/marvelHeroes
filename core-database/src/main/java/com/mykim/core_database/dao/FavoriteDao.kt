@@ -11,7 +11,7 @@ import java.sql.SQLException
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM FavoriteTable")
+    @Query("SELECT * FROM FavoriteTable ORDER BY id ASC")
     fun selectAllFavoriteTable(): Flow<List<FavoriteTable>>
 
     @Throws(SQLException::class)
@@ -21,4 +21,6 @@ interface FavoriteDao {
     @Query("DELETE FROM FavoriteTable WHERE heroId = :heroId")
     fun deleteFavoriteHero(heroId: Int): Int
 
+    @Query("SELECT heroId FROM FavoriteTable LIMIT 1")
+    fun selectFirstFavoriteItemId(): Int
 }

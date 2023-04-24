@@ -11,4 +11,5 @@ interface FavoriteDatabaseRepository {
 
     fun deleteFavorite(heroId: Int): Int
 
+    fun selectFirstFavoriteItemId(): Int
 }
