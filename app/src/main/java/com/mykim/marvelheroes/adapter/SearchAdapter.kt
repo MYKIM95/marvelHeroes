@@ -14,7 +14,7 @@ import com.mykim.marvelheroes.databinding.ItemHeroListBinding
 class SearchAdapter(
     private val context: Context,
     override val requestManager: RequestManager,
-    private val onClick: (Int) -> Unit
+    private val onClick: (HeroData) -> Unit
 ) : BaseDiffUtilAdapter<ItemHeroListBinding, HeroData>(requestManager) {
 
     override fun getBinding(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -34,7 +34,7 @@ class SearchAdapter(
             else AppCompatResources.getDrawable(context, R.drawable.bg_white_stroke_grey_r_16)
 
             container.setOnClickListener {
-                onClick.invoke(data.id)
+                onClick.invoke(data)
             }
         }
     }
@@ -43,6 +43,6 @@ class SearchAdapter(
         oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: HeroData, newItem: HeroData): Boolean =
-        oldItem.isFavorite == newItem.isFavorite
+        oldItem == newItem
 
 }

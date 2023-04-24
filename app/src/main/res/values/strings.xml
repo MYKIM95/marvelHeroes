@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">marvelHeroes</string>
 
+    <!-- MainActivity -->
+    <string name="favorite_list_error">즐겨찾기 목록 불러오기에 실패했습니다.</string>
+
     <!-- Search Fragment -->
     <string name="search_hint">마블 영웅 이름을 입력하시오.</string>
     <string name="search_empty">검색 결과가 없습니다.</string>
+    <string name="search_error">검색 결과 불러오기에 실패했습니다.</string>
     <string name="search_end">더 불러올 결과가 없습니다.</string>
 
     <!-- Favorite Fragment -->

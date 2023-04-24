@@ -4,12 +4,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mykim.common_util.*
 import com.mykim.commonbase.BaseFragment
+import com.mykim.marvelheroes.MainViewModel
 import com.mykim.marvelheroes.R
 import com.mykim.marvelheroes.adapter.SearchAdapter
 import com.mykim.marvelheroes.databinding.FragmentSearchBinding
@@ -23,6 +25,7 @@ import javax.inject.Inject
 class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel by viewModels<SearchViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
     private var searchAdapter: SearchAdapter? = null
 
     override fun createFragmentBinding(
@@ -33,14 +36,13 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
     override fun initFragment() {
         initAdapter()
         collectViewModel()
-        setClickListeners()
         setTextWatcher()
     }
 
     private fun initAdapter() = with(binding) {
-        searchAdapter = SearchAdapter(requireContext(), requestManager) {
-            // 좋아요 표시
-
+        searchAdapter = SearchAdapter(requireContext(), requestManager) { data ->
+            if(data.isFavorite) viewModel.removeFavoriteHero(data)
+            else viewModel.addFavoriteHero(data)
         }
 
         val gridSpan = requireActivity().windowWidth() / 150.dp
@@ -68,10 +70,14 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
 
     private fun collectViewModel() = with(viewModel) {
 
+        // TODO Wrapper 로 변경
+        mainViewModel.favoriteList.onResult(viewLifecycleOwner.lifecycleScope) {
+            viewModel.setFavoriteList(it)
+        }
+
         searchQuery
             .debounce(300)
             .onEach {
-                Log.i("123123123", "each : $it")
                 viewModel.isFirstSearch = true
                 viewModel.offset = 0
                 viewModel.heroName = it
@@ -93,24 +99,19 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
                 viewModel.setHeroList(it.data.results)
             },
             error = {
-                Log.d("123123123", "error = $it")
+                requireContext().showToast(R.string.search_error)
             },
             loading = {
-                Log.d("123123123", "loading...")
+                // TODO 로딩 구현
             },
             finish = {
-                Log.d("123123123", "finish...")
+                // TODO 로딩 구현
             }
         )
     }
 
-    private fun setClickListeners() = with(binding) {
-
-    }
-
     private fun setTextWatcher() = with(binding) {
         editSearch.addTextChangedListener { str ->
-            Log.i("123123123", "emit : ${str.toString()}")
             viewModel.setSearchQuery(str.toString())
         }
     }

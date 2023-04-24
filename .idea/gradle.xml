@@ -19,6 +19,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="Android Studio java home" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -28,6 +29,7 @@
             <option value="$PROJECT_DIR$/common-base" />
             <option value="$PROJECT_DIR$/common-util" />
             <option value="$PROJECT_DIR$/core-data" />
+            <option value="$PROJECT_DIR$/core-database" />
             <option value="$PROJECT_DIR$/core-model" />
             <option value="$PROJECT_DIR$/core-network" />
           </set>
