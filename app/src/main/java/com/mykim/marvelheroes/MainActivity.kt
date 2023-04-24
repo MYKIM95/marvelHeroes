@@ -1,11 +1,10 @@
 package com.mykim.marvelheroes
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mykim.common_util.onUiState
+import com.mykim.common_util.showToast
 import com.mykim.commonbase.BaseActivity
 import com.mykim.marvelheroes.adapter.PagerAdapter
 import com.mykim.marvelheroes.databinding.ActivityMainBinding
@@ -20,7 +19,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun createBinding() = ActivityMainBinding.inflate(layoutInflater)
 
     override fun initActivity() {
-
         collectViewModel()
         initAdapter()
         initTabLayout()
@@ -34,15 +32,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.setFavoriteList(it)
             },
             error = {
-                // TODO favorite 리스트 불러오기 실패
+                this@MainActivity.showToast(R.string.favorite_list_error)
             }
         )
     }
 
     private fun initAdapter() = with(binding) {
-
         viewPager.adapter = PagerAdapter(this@MainActivity, fragmentCount)
-
     }
 
     private fun initTabLayout() = with(binding) {
@@ -60,13 +56,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onActivityBackPressed() {
         super.onActivityBackPressed()
-
         if(binding.viewPager.currentItem == 0) {
             // TODO 닫는 다이얼로그
         }else {
             binding.viewPager.currentItem -= 1
         }
-
     }
 
 }

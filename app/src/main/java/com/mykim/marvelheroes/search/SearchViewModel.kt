@@ -1,6 +1,5 @@
 package com.mykim.marvelheroes.search
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mykim.common_util.di.DefaultDispatcher
 import com.mykim.common_util.di.IoDispatcher
@@ -14,6 +13,7 @@ import com.mykim.core_model.HeroData
 import com.mykim.core_model.HeroResponseData
 import com.mykim.core_model.state.ResultUiState
 import com.mykim.core_model.state.mutableResultState
+import com.mykim.marvelheroes.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -40,8 +40,11 @@ class SearchViewModel @Inject constructor(
     private val getFirstItemIdUseCase: GetFirstItemIdUseCase
 ) : BaseViewModel() {
 
+    companion object {
+        private const val PUBLIC_KEY = BuildConfig.PUBLIC_KEY
+        private const val PRIVATE_KEY = BuildConfig.PRIVATE_KEY
+    }
 
-    // TODO 웬만하면 다 viewModel 안에서 바꾸도록...
     var isFirstSearch = true
     var heroName = ""
     var total = 0
@@ -69,6 +72,7 @@ class SearchViewModel @Inject constructor(
         _searchQuery.value = query
     }
 
+    // 첫 호출 / 재호출 여부에 따른 검색 리스트 처리
     fun setHeroList(list: List<HeroData>) {
         if(isFirstSearch) {
             compareFavoriteSet(list)
@@ -94,20 +98,25 @@ class SearchViewModel @Inject constructor(
     private var searchJob: Job? = null
     fun searchHero() {
 
+        // 두글자 미만일 때, api 호출 취소
+        if(heroName.length < 2) {
+            searchJob?.takeIf { it.isActive }?.cancel()
+            return
+        }
 
-        Log.d("123123123", "cancel 전 : ${searchJob?.isActive}")
+        val timeStamp = System.currentTimeMillis().toString()
+        val hash = md5("$timeStamp$PRIVATE_KEY$PUBLIC_KEY")
+
         searchJob?.takeIf { it.isActive }?.cancel()
-        Log.d("123123123", "cancel 후 : ${searchJob?.isActive}")
         searchJob = getHeroDataUseCase.invoke(
             nameStartsWith = heroName,
             ts = timeStamp,
-            apikey = apikey,
+            apikey = PUBLIC_KEY,
             hash = hash,
             offset = offset
         ).onStart {
             _heroDataState.value = ResultUiState.Loading
         }.onEach {
-            Log.d("123123123", "success : $it")
             total = it.data.total
             _heroDataState.value = ResultUiState.Success(it)
         }.onCompletion {
@@ -115,9 +124,6 @@ class SearchViewModel @Inject constructor(
         }.catch {
             _heroDataState.value = ResultUiState.Error(it)
         }.launchIn(viewModelScope)
-
-        //TODO 두 글자 에서 한글자로 변할 때 cancel
-        if(heroName.length < 2) searchJob?.takeIf { it.isActive }?.cancel()
 
     }
 
@@ -127,7 +133,6 @@ class SearchViewModel @Inject constructor(
     }
 
     fun addFavoriteHero(heroData: HeroData) {
-        
         viewModelScope.launch(ioDispatcher) {
             if(favoriteIdSet.size >= 5) {
                 val firstItemId = getFirstItemIdUseCase.invoke()

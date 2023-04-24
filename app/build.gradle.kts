@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("mykim.android.application")
     id("mykim.android.hilt")
@@ -12,6 +14,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "PUBLIC_KEY", getApiKey("PUBLIC_KEY"))
+        buildConfigField("String", "PRIVATE_KEY", getApiKey("PRIVATE_KEY"))
     }
 
     buildTypes {
@@ -26,6 +31,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {

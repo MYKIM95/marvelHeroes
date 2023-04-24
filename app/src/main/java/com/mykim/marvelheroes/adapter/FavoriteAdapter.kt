@@ -43,6 +43,6 @@ class FavoriteAdapter(
         oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: FavoriteTable, newItem: FavoriteTable): Boolean =
-        oldItem.thumbnail == newItem.thumbnail && oldItem.name == newItem.name && oldItem.desc == newItem.desc
+        oldItem == newItem
 
 }

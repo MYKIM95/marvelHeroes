@@ -43,6 +43,6 @@ class SearchAdapter(
         oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: HeroData, newItem: HeroData): Boolean =
-        oldItem.isFavorite == newItem.isFavorite
+        oldItem == newItem
 
 }

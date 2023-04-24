@@ -78,7 +78,6 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
         searchQuery
             .debounce(300)
             .onEach {
-                Log.i("123123123", "each : $it")
                 viewModel.isFirstSearch = true
                 viewModel.offset = 0
                 viewModel.heroName = it
@@ -100,20 +99,19 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
                 viewModel.setHeroList(it.data.results)
             },
             error = {
-                Log.d("123123123", "error = $it")
+                requireContext().showToast(R.string.search_error)
             },
             loading = {
-                Log.d("123123123", "loading...")
+                // TODO 로딩 구현
             },
             finish = {
-                Log.d("123123123", "finish...")
+                // TODO 로딩 구현
             }
         )
     }
 
     private fun setTextWatcher() = with(binding) {
         editSearch.addTextChangedListener { str ->
-            Log.i("123123123", "emit : ${str.toString()}")
             viewModel.setSearchQuery(str.toString())
         }
     }
