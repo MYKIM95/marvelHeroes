@@ -127,8 +127,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun addFavoriteHero(heroData: HeroData) {
-
-        // TODO 이 부분 순차적으로 실행되는게 보장되는지?
+        
         viewModelScope.launch(ioDispatcher) {
             if(favoriteIdSet.size >= 5) {
                 val firstItemId = getFirstItemIdUseCase.invoke()

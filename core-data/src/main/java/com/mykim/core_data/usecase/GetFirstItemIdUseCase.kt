@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetFirstItemIdUseCase @Inject constructor(
     private val favoriteDatabaseRepository: FavoriteDatabaseRepository
 ){
-    operator fun invoke() = favoriteDatabaseRepository.selectFirstFavoriteItemId()
+    suspend operator fun invoke() = favoriteDatabaseRepository.selectFirstFavoriteItemId()
 }

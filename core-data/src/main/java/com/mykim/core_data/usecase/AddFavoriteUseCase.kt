@@ -7,5 +7,5 @@ import javax.inject.Inject
 class AddFavoriteUseCase @Inject constructor(
     private val favoriteDatabaseRepository: FavoriteDatabaseRepository
 ) {
-    operator fun invoke(favoriteTable: FavoriteTable) = favoriteDatabaseRepository.addFavorite(favoriteTable)
+    suspend operator fun invoke(favoriteTable: FavoriteTable) = favoriteDatabaseRepository.addFavorite(favoriteTable)
 }

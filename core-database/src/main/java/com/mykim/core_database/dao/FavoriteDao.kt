@@ -16,11 +16,11 @@ interface FavoriteDao {
 
     @Throws(SQLException::class)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addFavoriteHero(favoriteTable: FavoriteTable)
+    suspend fun addFavoriteHero(favoriteTable: FavoriteTable)
 
     @Query("DELETE FROM FavoriteTable WHERE heroId = :heroId")
-    fun deleteFavoriteHero(heroId: Int): Int
+    suspend fun deleteFavoriteHero(heroId: Int): Int
 
     @Query("SELECT heroId FROM FavoriteTable LIMIT 1")
-    fun selectFirstFavoriteItemId(): Int
+    suspend fun selectFirstFavoriteItemId(): Int
 }

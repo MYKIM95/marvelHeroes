@@ -10,10 +10,10 @@ class FavoriteDatabaseRepositoryImpl @Inject constructor(
 
     override fun getFavoriteList() = favoriteDao.selectAllFavoriteTable()
 
-    override fun addFavorite(favoriteTable: FavoriteTable) = favoriteDao.addFavoriteHero(favoriteTable)
+    override suspend fun addFavorite(favoriteTable: FavoriteTable) = favoriteDao.addFavoriteHero(favoriteTable)
 
-    override fun deleteFavorite(heroId: Int): Int = favoriteDao.deleteFavoriteHero(heroId)
+    override suspend fun deleteFavorite(heroId: Int): Int = favoriteDao.deleteFavoriteHero(heroId)
 
-    override fun selectFirstFavoriteItemId(): Int = favoriteDao.selectFirstFavoriteItemId()
+    override suspend fun selectFirstFavoriteItemId(): Int = favoriteDao.selectFirstFavoriteItemId()
 
 }

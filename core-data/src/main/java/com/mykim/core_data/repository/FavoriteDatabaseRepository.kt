@@ -7,9 +7,9 @@ interface FavoriteDatabaseRepository {
 
     fun getFavoriteList(): Flow<List<FavoriteTable>>
 
-    fun addFavorite(favoriteTable: FavoriteTable)
+    suspend fun addFavorite(favoriteTable: FavoriteTable)
 
-    fun deleteFavorite(heroId: Int): Int
+    suspend fun deleteFavorite(heroId: Int): Int
 
-    fun selectFirstFavoriteItemId(): Int
+    suspend fun selectFirstFavoriteItemId(): Int
 }
