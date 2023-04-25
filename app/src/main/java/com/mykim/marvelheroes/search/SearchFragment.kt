@@ -71,7 +71,6 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
 
     private fun collectViewModel() = with(viewModel) {
 
-        // TODO Wrapper 로 변경
         mainViewModel.favoriteList.onResult {
             viewModel.setFavoriteList(it)
         }

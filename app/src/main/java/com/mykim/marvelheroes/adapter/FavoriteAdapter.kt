@@ -40,9 +40,9 @@ class FavoriteAdapter(
     }
 
     override fun areItemsTheSame(oldItem: FavoriteTable, newItem: FavoriteTable): Boolean =
-        oldItem.id == newItem.id
+        oldItem == newItem
 
     override fun areContentsTheSame(oldItem: FavoriteTable, newItem: FavoriteTable): Boolean =
-        oldItem == newItem
+        oldItem.id == newItem.id
 
 }
