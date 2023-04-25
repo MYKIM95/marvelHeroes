@@ -1,6 +1,5 @@
 package com.mykim.marvelheroes.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
@@ -9,7 +8,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mykim.common_util.*
+import com.mykim.common_util.onResult
+import com.mykim.common_util.onUiState
+import com.mykim.common_util.showToast
+import com.mykim.common_util.visible
+import com.mykim.common_util.windowWidth
 import com.mykim.commonbase.BaseFragment
 import com.mykim.marvelheroes.MainViewModel
 import com.mykim.marvelheroes.R
@@ -99,13 +102,14 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
                 viewModel.setHeroList(it.data.results)
             },
             error = {
+                binding.loadingView.visible(false)
                 requireContext().showToast(R.string.search_error)
             },
             loading = {
-                // TODO 로딩 구현
+                binding.loadingView.visible()
             },
             finish = {
-                // TODO 로딩 구현
+                binding.loadingView.visible(false)
             }
         )
     }

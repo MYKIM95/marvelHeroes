@@ -1,5 +1,6 @@
 package com.mykim.marvelheroes.search
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mykim.common_util.di.DefaultDispatcher
 import com.mykim.common_util.di.IoDispatcher
@@ -98,9 +99,12 @@ class SearchViewModel @Inject constructor(
     private var searchJob: Job? = null
     fun searchHero() {
 
+        Log.d("123123123", "${searchJob?.isActive}")
+
         // 두글자 미만일 때, api 호출 취소
         if(heroName.length < 2) {
             searchJob?.takeIf { it.isActive }?.cancel()
+            Log.d("123123123", "${searchJob?.isActive}")
             return
         }
 
