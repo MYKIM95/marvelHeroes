@@ -8,8 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mykim.common_util.onResult
-import com.mykim.common_util.onUiState
 import com.mykim.common_util.showToast
 import com.mykim.common_util.visible
 import com.mykim.common_util.windowWidth
@@ -74,7 +72,7 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
     private fun collectViewModel() = with(viewModel) {
 
         // TODO Wrapper 로 변경
-        mainViewModel.favoriteList.onResult(viewLifecycleOwner.lifecycleScope) {
+        mainViewModel.favoriteList.onResult {
             viewModel.setFavoriteList(it)
         }
 
@@ -87,7 +85,7 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
                 viewModel.searchHero()
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        heroList.onResult(viewLifecycleOwner.lifecycleScope) { list ->
+        heroList.onResult { list ->
             if(list.isNotEmpty()) {
                 viewModel.isFirstSearch = false
                 searchAdapter?.submit(list)
@@ -97,7 +95,6 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
         }
 
         heroDataState.onUiState(
-            scope = viewLifecycleOwner.lifecycleScope,
             success = {
                 viewModel.setHeroList(it.data.results)
             },

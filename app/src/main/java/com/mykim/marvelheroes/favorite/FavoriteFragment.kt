@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mykim.common_util.onResult
 import com.mykim.common_util.visible
 import com.mykim.common_util.windowWidth
 import com.mykim.commonbase.BaseFragment
@@ -46,7 +44,7 @@ class FavoriteFragment @Inject constructor() : BaseFragment<FragmentFavoriteBind
 
     private fun collectViewModel() {
 
-        mainViewModel.favoriteList.onResult(viewLifecycleOwner.lifecycleScope) { list ->
+        mainViewModel.favoriteList.onResult { list ->
             if(list.isNotEmpty()) favoriteAdapter?.submit(list)
             binding.favoriteList.visible(list.isNotEmpty())
             binding.txtEmpty.visible(list.isEmpty())

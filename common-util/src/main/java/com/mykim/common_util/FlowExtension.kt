@@ -1,17 +1,16 @@
 package com.mykim.common_util
 
-import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.mykim.core_model.state.ResultUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-
-fun <T> Flow<T>.onResult(scope: LifecycleCoroutineScope, action: (T) -> Unit) {
-    scope.launch {
-        collect(action)
-    }
-}
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 
 inline fun <T> Flow<T>.collect(
     externalScope: CoroutineScope,
@@ -36,22 +35,4 @@ fun <T> Flow<T>.onLoading(
 ): Flow<T> = onStart {
     action.invoke()
     if(delay != null) delay(delay)
-}
-
-fun <T> Flow<ResultUiState<T>>.onUiState(
-    scope : CoroutineScope,
-    loading: () -> Unit = {},
-    success: (T) -> Unit = {},
-    error: (Throwable) -> Unit = {},
-    finish: () -> Unit = {}
-) {
-    collect(scope) { state ->
-        when (state) {
-            ResultUiState.Loading -> loading()
-            is ResultUiState.Success -> success(state.data)
-            is ResultUiState.Error -> error(state.error)
-            ResultUiState.Finish -> finish()
-            else -> Unit
-        }
-    }
 }

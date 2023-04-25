@@ -2,7 +2,6 @@ package com.mykim.marvelheroes
 
 import androidx.lifecycle.viewModelScope
 import com.mykim.common_util.di.IoDispatcher
-import com.mykim.common_util.onResult
 import com.mykim.common_util.resultState
 import com.mykim.commonbase.BaseViewModel
 import com.mykim.core_data.usecase.GetFavoriteListUseCase
@@ -34,7 +33,7 @@ class MainViewModel @Inject constructor(
 
     fun getFavoriteList() {
         viewModelScope.launch(ioDispatcher) {
-            getFavoriteListUseCase.invoke().resultState(this) { _favoriteListState.value = it }
+            getFavoriteListUseCase.invoke().resultState(viewModelScope) { _favoriteListState.value = it }
         }
     }
 

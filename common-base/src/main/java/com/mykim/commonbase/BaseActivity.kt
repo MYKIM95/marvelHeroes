@@ -6,14 +6,18 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import com.mykim.common_util.LifecycleOwnerWrapper
 
-abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity(), LifecycleOwnerWrapper {
 
     protected val binding: Binding by lazy { createBinding() }
 
     protected abstract fun createBinding(): Binding
 
     protected open fun initActivity() = Unit
+
+    override fun initLifeCycleOwner(): LifecycleOwner = this
 
     protected open fun onActivityBackPressed() = Unit
 
