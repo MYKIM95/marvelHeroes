@@ -14,7 +14,7 @@ interface SearchService {
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
         @Query("offset") offset: Int,
-        @Query("limit") limit: Int = 20
+        @Query("limit") limit: Int = 10
     ): Flow<HeroResponseData>
 
 }

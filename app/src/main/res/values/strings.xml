@@ -3,6 +3,7 @@
 
     <!-- MainActivity -->
     <string name="favorite_list_error">즐겨찾기 목록 불러오기에 실패했습니다.</string>
+    <string name="notice_finish_activity">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
 
     <!-- Search Fragment -->
     <string name="search_hint">마블 영웅 이름을 입력하시오.</string>

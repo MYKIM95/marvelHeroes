@@ -1,9 +1,7 @@
 package com.mykim.marvelheroes
 
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
-import com.mykim.common_util.onUiState
 import com.mykim.common_util.showToast
 import com.mykim.commonbase.BaseActivity
 import com.mykim.marvelheroes.adapter.PagerAdapter
@@ -14,7 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
-    private val fragmentCount = 2
+    private val screenCnt = 2
+    private var backTime = 0
 
     override fun createBinding() = ActivityMainBinding.inflate(layoutInflater)
 
@@ -27,7 +26,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun collectViewModel() = with(viewModel) {
         favoriteListState.onUiState(
-            scope = lifecycleScope,
             success = {
                 viewModel.setFavoriteList(it)
             },
@@ -38,7 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun initAdapter() = with(binding) {
-        viewPager.adapter = PagerAdapter(this@MainActivity, fragmentCount)
+        viewPager.adapter = PagerAdapter(this@MainActivity, screenCnt)
     }
 
     private fun initTabLayout() = with(binding) {
@@ -56,10 +54,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onActivityBackPressed() {
         super.onActivityBackPressed()
-        if(binding.viewPager.currentItem == 0) {
-            // TODO 닫는 다이얼로그
-        }else {
-            binding.viewPager.currentItem -= 1
+        when(binding.viewPager.currentItem) {
+            0 -> {
+                if(System.currentTimeMillis() - backTime > 2000) {
+                    this.showToast(R.string.notice_finish_activity)
+                }else {
+                    finish()
+                }
+            }
+            else -> {
+                binding.viewPager.currentItem -= 1
+            }
         }
     }
 
