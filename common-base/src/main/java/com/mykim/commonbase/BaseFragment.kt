@@ -48,8 +48,6 @@ abstract class BaseFragment<Binding: ViewDataBinding> : Fragment(), ImageViewExt
         super.onDestroyView()
     }
 
-    protected open fun onFragmentBackPressed(): Unit = Unit
-
     val Number.dp: Int get() = requireContext().convertDpToPx(this.toFloat()).toInt()
 
 }

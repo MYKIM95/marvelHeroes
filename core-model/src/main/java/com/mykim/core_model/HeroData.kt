@@ -1,5 +1,7 @@
 package com.mykim.core_model
 
+import com.google.gson.annotations.SerializedName
+
 data class HeroResponseData (
     val code: Int = 0,
     val data: CharacterData
@@ -14,7 +16,7 @@ data class CharacterData(
 )
 
 data class HeroData(
-    val id: Int = 0,
+    @SerializedName("id") val heroId: Int = 0,
     val name: String = "",
     val description : String = "",
     val thumbnail: Thumbnail = Thumbnail(),

@@ -42,7 +42,7 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
 
     private fun initAdapter() = with(binding) {
         searchAdapter = SearchAdapter(requireContext(), requestManager) { data ->
-            if(data.isFavorite) viewModel.removeFavoriteHero(data)
+            if (data.isFavorite) viewModel.removeFavoriteHero(data)
             else viewModel.addFavoriteHero(data)
         }
 
@@ -62,6 +62,7 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
                         && viewModel.heroList.value.size < viewModel.total -> {
                     viewModel.searchHero()
                 }
+
                 !binding.searchList.canScrollVertically(1) -> {
                     requireContext().showToast(R.string.search_end)
                 }
@@ -85,7 +86,7 @@ class SearchFragment @Inject constructor() : BaseFragment<FragmentSearchBinding>
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         heroList.onResult { list ->
-            if(list.isNotEmpty()) {
+            if (list.isNotEmpty()) {
                 viewModel.isFirstSearch = false
                 searchAdapter?.submit(list)
             }

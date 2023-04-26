@@ -45,7 +45,7 @@ class FavoriteFragment @Inject constructor() : BaseFragment<FragmentFavoriteBind
     private fun collectViewModel() {
 
         mainViewModel.favoriteList.onResult { list ->
-            if(list.isNotEmpty()) favoriteAdapter?.submit(list)
+            if (list.isNotEmpty()) favoriteAdapter?.submit(list)
             binding.favoriteList.visible(list.isNotEmpty())
             binding.txtEmpty.visible(list.isEmpty())
         }

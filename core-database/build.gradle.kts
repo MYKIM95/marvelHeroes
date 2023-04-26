@@ -22,7 +22,6 @@ dependencies {
     implementation(libs.bundles.room)
     kapt(libs.room.compiler)
 
-    implementation(project(":common-util"))
     implementation(project(":core-model"))
 
 }

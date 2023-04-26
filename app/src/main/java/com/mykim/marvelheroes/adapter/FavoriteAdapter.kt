@@ -13,7 +13,7 @@ class FavoriteAdapter(
     private val context: Context,
     override val requestManager: RequestManager,
     private val onClick: (Int) -> Unit
-): BaseDiffUtilAdapter<ItemFavoriteListBinding, FavoriteTable>(requestManager) {
+) : BaseDiffUtilAdapter<ItemFavoriteListBinding, FavoriteTable>(requestManager) {
 
     override fun getBinding(
         parent: ViewGroup,
@@ -24,7 +24,7 @@ class FavoriteAdapter(
 
     inner class ViewHolder(
         itemFavoriteListBinding: ItemFavoriteListBinding
-    ): BaseViewHolder<ItemFavoriteListBinding>(itemFavoriteListBinding) {
+    ) : BaseViewHolder<ItemFavoriteListBinding>(itemFavoriteListBinding) {
 
         override fun bind(position: Int) = with(binding) {
             val data = adapterList[position]
@@ -43,6 +43,6 @@ class FavoriteAdapter(
         oldItem == newItem
 
     override fun areContentsTheSame(oldItem: FavoriteTable, newItem: FavoriteTable): Boolean =
-        oldItem.id == newItem.id
+        oldItem.heroId == newItem.heroId
 
 }

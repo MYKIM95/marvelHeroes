@@ -27,8 +27,6 @@ glide = "4.12.0"
 
 room = "2.4.3"
 
-security = "1.1.0-alpha03"
-
 
 [libraries]
 
@@ -75,9 +73,6 @@ room = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
-# security (sharedPreference)
-security-sharedPreference = { module = "androidx.security:security-crypto-ktx", version.ref = "security" }
-
 # junit
 junit = { module = "junit:junit", version.ref = "junit" }
 test-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-junit" }
@@ -91,7 +86,6 @@ coroutine = ["coroutine-core", "coroutine-android"]
 retrofit = ["okhttp", "okhttp-interceptor", "retrofit", "retrofit-converter-gson", "retrofit-converter-scalars", "retrofit-adapter-coroutines"]
 glide = ["glide", "glide-compiler"]
 room = ["room", "room-runtime"]
-security = ["security-sharedPreference"]
 
 junit = ["junit", "test-junit", "test-espresso"]
 
