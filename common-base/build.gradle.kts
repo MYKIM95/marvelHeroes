@@ -5,6 +5,11 @@ plugins {
 
 android {
     namespace = "com.mykim.common_base"
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
 dependencies {

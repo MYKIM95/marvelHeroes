@@ -1,6 +1,5 @@
 package com.mykim.common_util
 
-import androidx.lifecycle.lifecycleScope
 import com.mykim.core_model.state.ResultUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay

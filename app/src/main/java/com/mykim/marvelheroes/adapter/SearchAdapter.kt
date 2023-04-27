@@ -43,9 +43,9 @@ class SearchAdapter(
     }
 
     override fun areItemsTheSame(oldItem: HeroData, newItem: HeroData): Boolean =
-        oldItem == newItem
+        oldItem.heroId == newItem.heroId
 
     override fun areContentsTheSame(oldItem: HeroData, newItem: HeroData): Boolean =
-        oldItem.heroId == newItem.heroId && oldItem.isFavorite == newItem.isFavorite
+        oldItem.isFavorite == newItem.isFavorite
 
 }
