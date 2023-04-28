@@ -13,7 +13,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
 
     fun removeFavoriteHero(id: Int) {
         viewModelScope.launch(ioDispatcher) {

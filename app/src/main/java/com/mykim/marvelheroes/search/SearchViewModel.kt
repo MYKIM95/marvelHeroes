@@ -1,6 +1,5 @@
 package com.mykim.marvelheroes.search
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mykim.common_util.di.DefaultDispatcher
 import com.mykim.common_util.di.IoDispatcher
@@ -66,18 +65,20 @@ class SearchViewModel @Inject constructor(
 
     fun setFavoriteList(list: List<FavoriteTable>) {
         favoriteIdSet = list.map { it.heroId }.toSet()
-        if(heroList.value.isNotEmpty()) { compareFavoriteSet(heroList.value) }
+        if (heroList.value.isNotEmpty()) {
+            compareFavoriteSet(heroList.value)
+        }
     }
 
-    fun setSearchQuery(query : String) {
+    fun setSearchQuery(query: String) {
         _searchQuery.value = query
     }
 
-    // 첫 호출 / 재호출 여부에 따른 검색 리스트 처리
+    // 첫 호출 / 재호출(paging) 여부에 따른 검색 리스트 처리
     fun setHeroList(list: List<HeroData>) {
-        if(isFirstSearch) {
+        if (isFirstSearch) {
             compareFavoriteSet(list)
-        }else {
+        } else {
             val modList = _heroList.value.toMutableList()
             modList.addAll(list)
             compareFavoriteSet(modList)
@@ -89,7 +90,7 @@ class SearchViewModel @Inject constructor(
         CoroutineScope(defaultDispatcher).launch {
             val modList = list.toMutableList()
             modList.forEachIndexed { index, heroData ->
-                modList[index] = heroData.copy(isFavorite = favoriteIdSet.contains(heroData.id))
+                modList[index] = heroData.copy(isFavorite = favoriteIdSet.contains(heroData.heroId))
             }
             _heroList.value = modList
             offset = modList.size
@@ -99,12 +100,9 @@ class SearchViewModel @Inject constructor(
     private var searchJob: Job? = null
     fun searchHero() {
 
-        Log.d("123123123", "${searchJob?.isActive}")
-
         // 두글자 미만일 때, api 호출 취소
-        if(heroName.length < 2) {
+        if (heroName.length < 2) {
             searchJob?.takeIf { it.isActive }?.cancel()
-            Log.d("123123123", "${searchJob?.isActive}")
             return
         }
 
@@ -131,29 +129,31 @@ class SearchViewModel @Inject constructor(
 
     }
 
-    private fun md5(input:String): String {
+    private fun md5(input: String): String {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
     }
 
     fun addFavoriteHero(heroData: HeroData) {
         viewModelScope.launch(ioDispatcher) {
-            if(favoriteIdSet.size >= 5) {
+            if (favoriteIdSet.size >= 5) {
                 val firstItemId = getFirstItemIdUseCase.invoke()
                 deleteFavoriteUseCase.invoke(firstItemId)
             }
-            addFavoriteUseCase.invoke(FavoriteTable(
-                heroId = heroData.id,
-                thumbnail = heroData.thumbnail.toImageUrl(),
-                name = heroData.name,
-                desc = heroData.description
-            ))
+            addFavoriteUseCase.invoke(
+                FavoriteTable(
+                    heroId = heroData.heroId,
+                    thumbnail = heroData.thumbnail.toImageUrl(),
+                    name = heroData.name,
+                    desc = heroData.description
+                )
+            )
         }
     }
 
     fun removeFavoriteHero(heroData: HeroData) {
         viewModelScope.launch(ioDispatcher) {
-            deleteFavoriteUseCase.invoke(heroData.id)
+            deleteFavoriteUseCase.invoke(heroData.heroId)
         }
     }
 

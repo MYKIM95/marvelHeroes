@@ -41,7 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun initTabLayout() = with(binding) {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            when(position) {
+            when (position) {
                 0 -> tab.text = "Search"
                 1 -> tab.text = "Storage"
             }
@@ -54,11 +54,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onActivityBackPressed() {
         super.onActivityBackPressed()
-        when(binding.viewPager.currentItem) {
+        when (binding.viewPager.currentItem) {
             0 -> {
-                if(System.currentTimeMillis() - backTime > 2000) {
+                if (System.currentTimeMillis() - backTime > 2000) {
                     this.showToast(R.string.notice_finish_activity)
-                }else {
+                } else {
                     finish()
                 }
             }

@@ -21,7 +21,8 @@ class MainViewModel @Inject constructor(
     private val getFavoriteListUseCase: GetFavoriteListUseCase
 ) : BaseViewModel() {
 
-    private val _favoriteListState = mutableResultState<List<FavoriteTable>>(ResultUiState.UnInitialize)
+    private val _favoriteListState =
+        mutableResultState<List<FavoriteTable>>(ResultUiState.UnInitialize)
     val favoriteListState = _favoriteListState.asStateFlow()
 
     private val _favoriteList = MutableStateFlow<List<FavoriteTable>>(listOf())

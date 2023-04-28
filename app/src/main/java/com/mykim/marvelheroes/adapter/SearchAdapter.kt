@@ -23,14 +23,17 @@ class SearchAdapter(
 
     inner class ViewHolder(
         itemHeroListBinding: ItemHeroListBinding
-    ): BaseViewHolder<ItemHeroListBinding>(itemHeroListBinding) {
+    ) : BaseViewHolder<ItemHeroListBinding>(itemHeroListBinding) {
         override fun bind(position: Int) = with(binding) {
             val data = adapterList[position]
 
             imgThumb.setImage(data.thumbnail.toImageUrl())
             txtName.text = data.name
             txtDesc.text = data.description
-            container.background = if(data.isFavorite) AppCompatResources.getDrawable(context, R.drawable.bg_orange_storke_grey_r_16)
+            container.background = if (data.isFavorite) AppCompatResources.getDrawable(
+                context,
+                R.drawable.bg_orange_storke_grey_r_16
+            )
             else AppCompatResources.getDrawable(context, R.drawable.bg_white_stroke_grey_r_16)
 
             container.setOnClickListener {
@@ -40,9 +43,9 @@ class SearchAdapter(
     }
 
     override fun areItemsTheSame(oldItem: HeroData, newItem: HeroData): Boolean =
-        oldItem == newItem
+        oldItem.heroId == newItem.heroId
 
     override fun areContentsTheSame(oldItem: HeroData, newItem: HeroData): Boolean =
-        oldItem.id == newItem.id && oldItem.isFavorite == newItem.isFavorite
+        oldItem.isFavorite == newItem.isFavorite
 
 }
